@@ -8,3 +8,6 @@ Possible drops are:
 - Drop diamond block
 - Super zombie
 - (Currently) Useless potion
+
+### Resources used:
+Spigot: https://hub.spigotmc.org/jenkins/job/BuildTools/
