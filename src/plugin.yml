@@ -1,0 +1,5 @@
+name: LuckyGoldBlock
+version: 1.0
+author: CCHS Coding Club
+main: cchs.codingclub.luckygoldblock.Main
+api-version: 1.16
