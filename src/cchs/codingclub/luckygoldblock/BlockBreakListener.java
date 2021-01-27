@@ -1,13 +1,20 @@
 package cchs.codingclub.luckygoldblock;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.material.MaterialData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +33,7 @@ public class BlockBreakListener implements Listener {
         /*
          * 0. Spawn bat
          * 1. Spawn evoker
-         * 2. Spawn chicken
+         * 2. Spawn (evil) chicken
          * 3. Drop diamond block
          * 4. Super zombie
          * 5. Special potion
@@ -73,17 +80,34 @@ public class BlockBreakListener implements Listener {
                         new ItemStack(Material.DIAMOND_HELMET)
                 };
 
+                armorArray[0].addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                armorArray[1].addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                armorArray[2].addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                armorArray[3].addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+
                 LivingEntity livingZombie = ((LivingEntity) superZombie);
+
+                livingZombie.setCustomName("Bob");
+
                 livingZombie.getEquipment().setArmorContents(armorArray);
                 livingZombie.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
                 break;
             }
             case 5: {
-                world.dropItem(blockBrokenLocation, new ItemStack(Material.POTION));
+                ItemStack potionItemStack = new ItemStack(Material.POTION);
+
+                PotionMeta potionMeta = (PotionMeta) potionItemStack.getItemMeta();
+                potionMeta.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 3), true);
+                potionMeta.setDisplayName("Flying Potion");
+                potionMeta.setColor(Color.SILVER);
+
+                potionItemStack.setItemMeta(potionMeta);
+
+                world.dropItem(blockBrokenLocation, potionItemStack);
                 break;
 //        * 5. Special potion
             }
         }
-
+        event.setDropItems(false);
     }
 }
